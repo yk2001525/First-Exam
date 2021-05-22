@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/echarts.min.js"></script>
+  </head>
+  <body>
+    <div style="position: relative" class="root">
+      <div
+        id="search"
+        style="
+          position: absolute;
+          height: 100%;
+          width: 100%;
+          background-color: #fff;
+          z-index: 100;
+          overflow: hidden;
+          display: none;
+        "
+      >
+        <div
+          style="
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 1px solid #f0f0f0;
+            padding: 7px;
+          "
+          class="top"
+        >
+          <input
+            id="js-groupId"
+            class="search"
+            placeholder="搜索地区"
+            type="text"
+            style="
+              width: 60vw;
+              height: 30px;
+              background-color: #f0f0f0;
+              border: none;
+              outline: none;
+              padding: 0 15px 0;
+            "
+          />
+          <input type="hidden" id="groupId" />
+          <span id="cancel">取消</span>
+        </div>
+        <ul id="groupid">
+          <div id="historysearch" style="margin-left: -1vw; display: none">
+            历史记录
+          </div>
+          <img
+            id="clear"
+            style="width: 15px; display: none; position: absolute; right: 5vw"
+            src="/delete.png"
+            alt=""
+          />
+        </ul>
+        <div style="margin-left: 3vw">热门城市</div>
+        <ul id="hotcity">
+          <li>北京</li>
+          <li>上海</li>
+          <li>广州</li>
+          <li>深圳</li>
+          <li>郑州</li>
+          <li>西安</li>
+          <li>南京</li>
+          <li>杭州</li>
+          <li>武汉</li>
+          <li>成都</li>
+          <li>沈阳</li>
+          <li>天津</li>
+        </ul>
+      </div>
+      
+      <div id="weather-window-box" style="display: none;">
+      <div id="weather-window" style="width: 250px;background-color: #f4f4f4;position: absolute;top: 25vh;
+      border-radius: 8px;left: 15vw;display: flex;flex-direction: column;text-align: center;">
+      <div id="weather-window-bg">
+        <span id="weather-window-close" style="position: absolute;right: 10px;top: 0px;cursor: pointer;color: #fff;font-size: 26px;">×</span>
+          <div id="weather-win-nums">空气质量指数</div>
+          <div id="weather-win-num"></div>
+          <div id="weather-win-lev"></div>
+        </div>
+          <ul id="weather-ul">
+            <li><div id="pm25-num"></div><div style=" color: #adadad;">PM2.5</div></li>
+            <li ><div id="pm10-num"></div><div style=" color: #adadad;">PM10</div></li>
+            <li style="border-right:none"><div id="so2-num"></div><div style=" color: #adadad;">SO2</div></li>
+          </ul>
+          <ul>
+            <li style="border-bottom: none;" ><div id="no2-num"></div><div style=" color: #adadad;">NO2</div></li>
+            <li style="border-bottom: none;"><div id="o3-num"></div><div style=" color: #adadad;">O3</div></li>
+            <li style="border-right:none;border-bottom: none;"><div id="co-num"></div><div style=" color: #adadad;">CO</div></li>
+          </ul>
+      </div>
+    </div>
+      <div class="maincontent">
+        <div class="top-part">
+          <img src="/left-arrow.png" alt="" />
+          <span>
+            <img
+              style="height: 20px; position: relative; top: -3px"
+              src="/position.png"
+              alt=""
+            />
+            <span id="city" style="position: relative; top: -8px"> </span>
+          </span>
+          <img src="/share.png" alt="" />
+        </div>
+        <div style="margin-left:2vw;width:35px;background-color: rgb(247, 160, 0);padding: 5px;box-sizing: border-box;font-size: 12px;color: #fff;border-radius: 6px;text-align: center;" class="weatherlevel">
+          <div id="weather-level-num"></div>
+          <div id="weather-level-lev"></div>
+        </div>
+        <div class="center-part">
+          <div id="city-temperature" style="font-size: 50px"></div>
+          <div id="city-wea" style="font-size: 20px"></div>
+          <div id="city-win" style="font-size: 16px"></div>
+          <div style="margin-top: 30px">光芒透过云缝，洒向大地~</div>
+        </div>
+      </div>
+      <div class="tomorrow">
+        <div
+          class="tomorrow-part"
+          style="
+            display: inline-block;
+            padding-right: 10px;
+            border-right: 1px solid #f2f2f2;
+          "
+        >
+          <div>
+            <span>今天</span>
+            <span id="today-tem">32/18°</span>
+          </div>
+          <div id="today-wea-img" style="margin-top: 5px">
+            <span id="today-wea">多云转晴</span>
+            <span><img src="/duoyun.png" alt="" /></span>
+          </div>
+        </div>
+        <div class="tomorrow-part" style="display: inline-block">
+          <div>
+            <span>明天</span>
+            <span id="tomorrow-tem">26/15°</span>
+          </div>
+          <div id="tomorrow-wea-img" style="margin-top: 5px">
+            <span id="tomorrow-wea">小雨转多云</span>
+          </div>
+        </div>
+      </div>
+      <div style="height: 20px"></div>
+      <div class="scroll">
+        <ul id="list"></ul>
+      </div>
+      <div style="height: 20px"></div>
+      <div class="detail">
+        <div>
+          <ul id="detail-top" style="padding: 10px 5px 0px"></ul>
+          <ul id="detail-middle" style="padding: 0 5px 0"></ul>
+        </div>
+        <div id="detail" style="width: 440px; height: 90px"></div>
+        <div>
+          <ul id="detail-win" style="padding: 0 10px 10px"></ul>
+          <ul id="detail-speed" style="padding: 0 10px 10px"></ul>
+        </div>
+      </div>
+      <div style="height: 20px"></div>
+      <div>
+        <div id="live">
+          <ul style="text-align: center" id="lives"></ul>
+        </div>
+      </div>
+      <div class="copyright">数据来源于中国天气网</div>
+      <div class="copyright">CopyRight...</div>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <script src="/weather.js"></script>
+  </body>
+</html>
