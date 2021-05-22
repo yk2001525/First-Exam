@@ -361,6 +361,49 @@ $("#hotcity>li").each(function (index) {
       },
     });
 
+      $.ajax({
+        url: "https://www.tianqiapi.com/free/week?appid=68964431&appsecret=7MzBF47T&",
+        type: "get",
+        data:{
+          city:cityname
+        },
+        dataType: "json",
+        success: function (res, status) {
+          console.log(res);
+          // console.log(res[0].date)
+          $("#detail-top").empty()
+          $("#detail-middle").empty()
+          $("#detail-win").empty()
+          $("#detail-speed").empty()
+          var tem_day = []
+          var tem_night = []
+          for(var i = 0;i<7;i++){
+            tem_day[i] = parseInt(res.data[i].tem_day)
+            tem_night[i] = parseInt(res.data[i].tem_night)
+          }
+          console.log(tem_day,tem_night)
+          option.series[0].data = tem_day
+          option.series[1].data = tem_night
+          myChart.setOption(option);
+          option && myChart.setOption(option);
+
+
+          for (var i = 0; i < 7; i++) {
+            console.log(res.data[i].date.slice(4, 6));
+            $("#detail-top").append(
+              $("<li>" + res.data[i].date.slice(5, 10) + "</li>")
+            );
+            $("#detail-middle").append(
+              $(
+                `<span><img style="width:30px;margin-right:36px;margin-left:1px" src="/${res.data[i].wea_img}.png" alt=""></span>`
+              )
+            );
+            $("#detail-win").append($("<li>" + res.data[i].win + "</li>"));
+            $("#detail-speed").append($("<li>" + res.data[i].win_speed + "</li>"));
+          }
+        },
+      });
+
     $("#search").slideUp();
     setTimeout(() => {
       $("#groupid").append($(`<li>${cityname}</li>`));
